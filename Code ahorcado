@@ -1,1 +1,46 @@
+import random
+
+# Lista de palabras para adivinar
+palabras = ["programacion", "ahorcado", "computadora", "estudiante", "desarrollo"]
+palabra_secreta = random.choice(palabras)
+letras_adivinadas = []
+intentos = 6
+letras_usadas = []
+
+# Generar guiones iniciales
+estado = ["_"] * len(palabra_secreta)
+
+print("🎮 ¡Bienvenido al juego del Ahorcado!")
+print(" ".join(estado))
+
+while intentos > 0 and "_" in estado:
+    letra = input("\nIngresa una letra: ").lower()
+    
+    # Validaciones
+    if len(letra) != 1 or not letra.isalpha():
+        print("⚠️ Solo puedes ingresar UNA letra válida.")
+        continue
+    if letra in letras_usadas:
+        print("🔁 Ya usaste esa letra, intenta otra.")
+        continue
+    
+    letras_usadas.append(letra)
+    
+    if letra in palabra_secreta:
+        # Reemplazar guiones
+        for i, caracter in enumerate(palabra_secreta):
+            if caracter == letra:
+                estado[i] = letra
+        print("✅ ¡Bien! La letra está en la palabra.")
+    else:
+        intentos -= 1
+        print(f"❌ ¡Fallaste! Te quedan {intentos} intentos.")
+    
+    print(" ".join(estado))
+
+# Resultado final
+if "_" not in estado:
+    print("\n🎉 ¡FELICIDADES! Ganaste el juego.")
+else:
+    print(f"\n💀 ¡PERDISTE! La palabra secreta era: {palabra_secreta}")
 
